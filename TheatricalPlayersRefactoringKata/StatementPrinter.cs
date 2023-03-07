@@ -16,13 +16,13 @@ namespace TheatricalPlayersRefactoringKata
             foreach (var perf in invoice.Performances)
             {
                 var play = plays[perf.PlayID];
-                var total_seats_in_perf = GetTotalAmountOfSeats(play, perf);
+                var totalSeatsInPerf = GetTotalAmountOfSeats(play, perf);
 
                 volumeCredits += CalculateVolumeCreditsAddition(play, perf.Audience);
 
                 // print line for this order
-                result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(total_seats_in_perf / 100), perf.Audience);
-                totalAmount += total_seats_in_perf;
+                result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(totalSeatsInPerf / 100), perf.Audience);
+                totalAmount += totalSeatsInPerf;
             }
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
             result += string.Format("You earned {0} credits\n", volumeCredits);

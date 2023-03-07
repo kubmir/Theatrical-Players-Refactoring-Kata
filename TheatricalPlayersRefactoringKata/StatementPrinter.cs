@@ -20,17 +20,10 @@ namespace TheatricalPlayersRefactoringKata
                 switch (play.Type) 
                 {
                     case "tragedy":
-                        thisAmount = 40000;
-                        if (perf.Audience > 30) {
-                            thisAmount += 1000 * (perf.Audience - 30);
-                        }
+                        thisAmount = CalculateAmount(perf.Audience, 40000, 30, 1000);
                         break;
                     case "comedy":
-                        thisAmount = 30000;
-                        if (perf.Audience > 20) {
-                            thisAmount += 10000 + 500 * (perf.Audience - 20);
-                        }
-                        thisAmount += 300 * perf.Audience;
+                        thisAmount = CalculateAmount(perf.Audience, 30000 + 300 * perf.Audience, 20, 500, 10000);
                         break;
                     default:
                         throw new Exception("unknown type: " + play.Type);
@@ -46,6 +39,17 @@ namespace TheatricalPlayersRefactoringKata
             }
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
             result += string.Format("You earned {0} credits\n", volumeCredits);
+            return result;
+        }
+
+        private int CalculateAmount(int audience, int initial_amount, int threshold,
+                                    int multiplication = 1, int addition = 0)
+        {
+            int result = initial_amount;
+            if (audience > threshold)
+            {
+                result += addition + multiplication * (audience - threshold);
+            }
             return result;
         }
     }
